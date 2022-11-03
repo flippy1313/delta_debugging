@@ -1,0 +1,16 @@
+#!/bin/bash
+cd libpng-1.6.34
+c=0
+sh ./configure CFLAGS="--coverage -static"
+make clean ; make 
+for file in large-png-suite/*;
+do
+let "c+=1"
+if [ $c -lt 200 ];
+then
+echo "$c"
+./pngtest $file
+fi
+done
+gcov *.c
+
